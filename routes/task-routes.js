@@ -40,7 +40,7 @@ router.get( '/:id', ( req, res, next ) => {
             res.status(200).json(foundTask)
         })
         .catch( (err) => {
-            res.status(500).json({message: 'Specified id is not valid'})
+            res.status(400).json(err)
         })
 })
 
@@ -64,7 +64,7 @@ router.put('/:id', ( req, res, next) => {
         })
 })
 
-
+// DELETE TASK
 router.delete( '/:id', ( req, res, next ) => {
     const { id } = req.params;
 
