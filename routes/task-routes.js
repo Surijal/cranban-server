@@ -10,7 +10,6 @@ const Project = require('../models/Projects');
 //POST NEW TASK
 router.post('/', ( req, res, next ) => {
     const { title, description, deadline, projectId } = req.body;
-    console.log('POST TASK BODY', req.body);
     
 
     Task.create( { title, description, deadline, project: projectId })
