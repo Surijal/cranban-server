@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const router = express.Router();
 
@@ -16,7 +18,7 @@ const {
 } = require('../helpers/middlewares');
 
 //FIND USER BY ID
-router.get( '/:id', isLoggedIn, ( req, res, next ) => {
+router.get( '/:id', isLoggedIn,  ( req, res, next ) => {
     const { id } = req.params;
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {
@@ -55,7 +57,7 @@ router.get('/email/:email', isLoggedIn, ( req, res, next ) => {
 
 
 //FIND USER AND PATCH
-router.patch('/:id', isLoggedIn, ( req, res, next ) => {
+router.patch('/:id', isLoggedIn, async ( req, res, next ) => {
     const { id } = req.params;
     const { username, firstname, email, password } = req.body;
 
@@ -64,13 +66,18 @@ router.patch('/:id', isLoggedIn, ( req, res, next ) => {
         return
     }
 
-    User.findByIdAndUpdate( id, { username, firstname, email, password }, {new: true})
+    
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashPass = bcrypt.hashSync(password, salt)
+
+    await User.findByIdAndUpdate( id, { username, firstname, email, password: hashPass }, {new: true})
+        console.log('>>>>>>>>>>>>>>', hashPass)
         .then( () => {
             res.status(201).json({message: 'User Profile updated'})
         })
-        .catch( (err) => {
-            res.status(400).json(err)
-        })
+        .catch((err) => {
+        res.status(400).json(err)
+    })
 })
 
 
