@@ -7,8 +7,17 @@ const Project = require('../models/Projects');
 const Task = require('../models/Tasks');
 
 
+// HELPER FUNCTIONS
+const {
+    isLoggedIn,
+    isNotLoggedIn,
+    validationLogin,
+    validatePassword
+} = require('../helpers/middlewares');
+
+
 //POST NEW PROJECT
-router.post('/', ( req, res, next ) => {
+router.post('/', isLoggedIn, ( req, res, next ) => {
     const { title, description, deadline } = req.body;
 
     Project.create({ title, description, deadline, tasks: [] })
@@ -22,7 +31,7 @@ router.post('/', ( req, res, next ) => {
 
 
 //GET ALL PROJECT
-router.get('/', ( req, res, next ) => {
+router.get('/', isLoggedIn, ( req, res, next ) => {
     Project.find()
         .populate('tasks')
         .then( allProjects => {
@@ -35,7 +44,7 @@ router.get('/', ( req, res, next ) => {
 
 
 //GET SPECIFIC PROJECT
-router.get('/:id', ( req, res, next ) => {
+router.get('/:id', isLoggedIn, ( req, res, next ) => {
     const { id } = req.params;
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {
@@ -55,7 +64,7 @@ router.get('/:id', ( req, res, next ) => {
 
 
 //PUT SPECIFIC PROJECT
-router.put('/:id', ( req, res, next ) => {
+router.put('/:id', isLoggedIn, ( req, res, next ) => {
     const { id } = req.params;
     const { title, description, deadline } = req.body;
 
@@ -75,7 +84,7 @@ router.put('/:id', ( req, res, next ) => {
 })
 
 
-router.delete('/:id', ( req, res, next ) => {
+router.delete('/:id', isLoggedIn,( req, res, next ) => {
     const { id } = req.params;
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {

@@ -7,8 +7,17 @@ const Task = require('../models/Tasks');
 const Project = require('../models/Projects');
 
 
+// HELPER FUNCTIONS
+const {
+    isLoggedIn,
+    isNotLoggedIn,
+    validationLogin,
+    validatePassword
+} = require('../helpers/middlewares');
+
+
 //POST NEW TASK
-router.post('/', ( req, res, next ) => {
+router.post('/', isLoggedIn, ( req, res, next ) => {
     const { title, description, deadline, projectId } = req.body;
     
 
@@ -26,7 +35,7 @@ router.post('/', ( req, res, next ) => {
 
 
 //GET TASK BY ID
-router.get( '/:id', ( req, res, next ) => {
+router.get( '/:id', isLoggedIn, ( req, res, next ) => {
     const { id } = req.params;
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {
@@ -45,7 +54,7 @@ router.get( '/:id', ( req, res, next ) => {
 
 
 // UPDATE TASK
-router.put('/:id', ( req, res, next) => {
+router.put('/:id', isLoggedIn, ( req, res, next) => {
     const { id } = req.params;
     const { title, description, deadline } = req.body;
 
@@ -64,7 +73,7 @@ router.put('/:id', ( req, res, next) => {
 })
 
 // DELETE TASK
-router.delete( '/:id', ( req, res, next ) => {
+router.delete( '/:id', isLoggedIn, ( req, res, next ) => {
     const { id } = req.params;
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {
