@@ -34,6 +34,25 @@ router.get('/', ( req, res, next ) => {
 })
 
 
+//GET SPECIFIC PROJECT
+router.get('/:id', ( req, res, next ) => {
+    const { id } = req.params;
+
+    if ( !mongoose.Types.ObjectId.isValid(id)) {
+        res.status(500).json({message: 'Specified id is not valid'})
+        return
+    }
+
+    Project.findById(id)
+        .populate('tasks')
+        .then( (foundProject) => {
+            res.status(200).json(foundProject)
+        })
+        .catch((err) => {
+            res.status(500).json(err)
+        })
+})
+
 
 
 module.exports = router;
