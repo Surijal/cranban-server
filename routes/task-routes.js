@@ -27,8 +27,10 @@ router.post('/', ( req, res, next ) => {
 
 
 //GET TASK BY ID
-router.get( '/tasks/:id', ( req, res, next ) => {
+router.get( '/:id', ( req, res, next ) => {
     const { id } = req.params;
+    console.log('//////// GET TAKS ID', req.params);
+    
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {
         res.status(500).json({message: 'Specified id is not valid'})
