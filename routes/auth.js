@@ -21,7 +21,7 @@ router.get('/me', isLoggedIn, (req, res, next) => {
 //  POST    '/signup'
 router.post('/signup', isNotLoggedIn, validationLogin, async (req, res, next) => {
 
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
     
     try {
       // projection
@@ -34,7 +34,7 @@ router.post('/signup', isNotLoggedIn, validationLogin, async (req, res, next) =>
       else {
         const salt = bcrypt.genSaltSync(saltRounds);
         const hashPass = bcrypt.hashSync(password, salt);
-        const newUser = await User.create({ username, password: hashPass });
+        const newUser = await User.create({ username, email, password: hashPass });
         req.session.currentUser = newUser;
         res
           .status(200) //  OK

@@ -4,11 +4,10 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   username: { type: String, required: true },
-  // firstName: { type: String, required: true },
   password: { type: String, required: true},
-  // email: { type: String, required: true, unique:true },
-  // projects: [{ type: Schema.Types.ObjectId, ref: 'Project'}],
-  // teams: [{ type: Schema.Types.ObjectId, ref: 'Team'}]
+  email: { type: String, required: true, unique:true },
+  projects: [{ type: Schema.Types.ObjectId, ref: 'Project'}],
+  teams: [{ type: Schema.Types.ObjectId, ref: 'Team'}]
 }, { 
 timestamps: { 
 createdAt: 'created_at',

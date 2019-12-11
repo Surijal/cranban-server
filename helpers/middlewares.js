@@ -1,4 +1,6 @@
 const createError = require('http-errors');
+const passwordLengthMin = 6;
+
 
 exports.isLoggedIn = (req, res, next) => {
   if (req.session.currentUser) next();
@@ -16,4 +18,12 @@ exports.validationLogin = (req, res, next) => {
 
   if (!username || !password) next(createError(400));
   else next();
+};
+
+exports.validatePassword = (req, res, next) => {
+  const { password } = req.body;
+
+  if (typeof password !== "string") next(createError(400))
+  if (password.length < passwordLengthMin ) next(createError(400))
+  else next()
 };
