@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 
 const router = express.Router();
 
-const Project = require('../models/projects');
-const Task = require('../models/tasks');
+const Project = require('../models/Projects');
+const Task = require('../models/Tasks');
 
 
 //POST NEW PROJECT
@@ -16,7 +16,7 @@ router.post('/', ( req, res, next ) => {
             res.status(201).json(createdProject)
         })
         .catch((err) => {
-            res.status(500).json(err)
+            res.status(400).json(err)
         })
 })
 
@@ -49,7 +49,7 @@ router.get('/:id', ( req, res, next ) => {
             res.status(200).json(foundProject)
         })
         .catch((err) => {
-            res.status(500).json(err)
+            res.status(400).json(err)
         })
 })
 
@@ -70,7 +70,7 @@ router.put('/:id', ( req, res, next ) => {
             res.status(200).json(foundProject)
         })
         .catch( (err) => {
-            res.status(500).json(err)
+            res.status(400).json(err)
         })
 })
 
@@ -90,7 +90,7 @@ router.delete('/:id', ( req, res, next ) => {
             res.status(202).json(foundProject)
         })
         .catch( (err) => {
-            res.status(500).json({message: 'Specified id is not valid'})
+            res.status(400).json(err)
         })
 })
 
