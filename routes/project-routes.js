@@ -9,7 +9,7 @@ const Task = require('../models/Tasks');
 
 //POST NEW PROJECT
 router.post('/', ( req, res, next ) => {
-    const { title, description, deadline  } = req.body;
+    const { title, description, deadline } = req.body;
 
     Project.create({ title, description, deadline, tasks: [] })
         .then( (createdProject ) => {

@@ -7,6 +7,25 @@ const Task = require('../models/Tasks');
 const Project = require('../models/Projects');
 
 
+//POST NEW TASK
+router.post('/', ( req, res, next ) => {
+    const { title, description, deadline, projectId } = req.body;
+    console.log('POST TASK BODY', req.body);
+    
+
+    Task.create( { title, description, deadline, project: projectId })
+        .then( (newTask) => {
+            return Project.findByIdAndUpdate( projectId, { $push: { tasks: newTask._id }}, {new: true}).populate('tasks')
+        }) 
+        .then( (updatedProject) => {
+            res.status(201).json(updatedProject)
+        })
+        .catch( (err) => {
+            res.status(400).json(err)
+        })
+})
+
+
 //GET TASK BY ID
 router.get( '/tasks/:id', ( req, res, next ) => {
     const { id } = req.params;
