@@ -10,6 +10,7 @@ const {
   isLoggedIn,
   isNotLoggedIn,
   validationLogin,
+  validatePassword
 } = require('../helpers/middlewares');
 
 //  GET    '/me'
@@ -19,7 +20,7 @@ router.get('/me', isLoggedIn, (req, res, next) => {
 });
 
 //  POST    '/signup'
-router.post('/signup', isNotLoggedIn, validationLogin, async (req, res, next) => {
+router.post('/signup', isNotLoggedIn, validationLogin, validatePassword, async (req, res, next) => {
 
     const { username, password, email } = req.body;
     
