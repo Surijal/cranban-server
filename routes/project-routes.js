@@ -54,5 +54,45 @@ router.get('/:id', ( req, res, next ) => {
 })
 
 
+//PUT SPECIFIC PROJECT
+router.put('/:id', ( req, res, next ) => {
+    const { id } = req.params;
+    const { title, description, deadline } = req.body;
+
+    if ( !mongoose.Types.ObjectId.isValid(id)) {
+        res.status(500).json({message: 'Specified id is not valid'})
+        return
+    }
+
+    Project.findByIdAndUpdate(id, { title, description, deadline })
+        .populate('tasks')
+        .then( (foundProject) => {
+            res.status(200).json(foundProject)
+        })
+        .catch( (err) => {
+            res.status(500).json(err)
+        })
+})
+
+
+router.delete('/:id', ( req, res, next ) => {
+    const { id } = req.params;
+
+    if ( !mongoose.Types.ObjectId.isValid(id)) {
+        res.status(500).json({message: 'Specified id is not valid'})
+        return
+    }
+
+
+    Project.findByIdAndRemove(id)
+        .populate('tasks')
+        .then( (foundProject) => {
+            res.status(202).json(foundProject)
+        })
+        .catch( (err) => {
+            res.status(500).json({message: 'Specified id is not valid'})
+        })
+})
+
 
 module.exports = router;
