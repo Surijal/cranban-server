@@ -65,4 +65,30 @@ router.put('/:id', ( req, res, next) => {
 })
 
 
+router.delete( '/:id', ( req, res, next ) => {
+    const { id } = req.params;
+
+    if ( !mongoose.Types.ObjectId.isValid(id)) {
+        res.status(500).json({message: 'Specified id is not valid'})
+        return
+    }
+
+
+    Task.findByIdAndRemove(id)
+        .then( ( deletedTask ) => {
+            return deletedTask.project;
+        })
+        .then( (projectId) => {
+            return Project.findByIdAndUpdate( projectId, { $pull: { tasks: id }})
+        })
+        .then( () => {
+            res.status(202).json({message: 'Task deleted'})
+        })
+        .catch( (err) => {
+            res.status(400).json(err)
+        })
+        
+    })
+    
+
 module.exports = router;
