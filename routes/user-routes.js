@@ -37,10 +37,6 @@ router.get( '/:id', isLoggedIn, ( req, res, next ) => {
 //FIND USER BY EMAIL
 router.get('/email/:email', isLoggedIn, ( req, res, next ) => {
     const { email } = req.params;
-    
-
-    console.log('//////////////////', req.body);
-    
 
     if ( !mongoose.Types.ObjectId.isValid(email)) {
         res.status(500).json({message: 'Specified email is not valid'})

@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const router = express.Router();
 
 const Project = require('../models/Projects');
-const Task = require('../models/Tasks');
+
+const User = require('../models/User');
 
 
 // HELPER FUNCTIONS
@@ -18,9 +19,17 @@ const {
 
 //POST NEW PROJECT
 router.post('/', isLoggedIn, ( req, res, next ) => {
-    const { title, description, deadline } = req.body;
+    const { title, description, deadline, userId } = req.body;
 
-    Project.create({ title, description, deadline, tasks: [] })
+
+    
+    
+    Project.create({ title, description, deadline, tasks: [], users: userId })
+    .then((createdProject) => {
+        
+            return User.findByIdAndUpdate(userId, {$push: { projects: createdProject._id}})
+            .populate('user')
+        })
         .then( (createdProject ) => {
             res.status(201).json(createdProject)
         })

@@ -11,7 +11,7 @@ const taskSchema = new Schema({
     subTask: [{ 
     description: { type: String, required: true }, 
     done: { type: Boolean, default: false }
-                            }]
+}]
 
 },{ 
     timestamps: { 

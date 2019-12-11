@@ -7,6 +7,7 @@ const Task = require('../models/Tasks');
 const Project = require('../models/Projects');
 
 
+
 // HELPER FUNCTIONS
 const {
     isLoggedIn,
@@ -17,7 +18,7 @@ const {
 
 
 //POST NEW TASK
-router.post('/', isLoggedIn, ( req, res, next ) => {
+router.post('/',  isLoggedIn, ( req, res, next ) => {
     const { title, description, deadline, projectId } = req.body;
     
 

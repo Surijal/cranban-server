@@ -22,8 +22,8 @@ router.get('/me', isLoggedIn, (req, res, next) => {
 //  POST    '/signup'
 router.post('/signup', isNotLoggedIn, validationLogin, validatePassword, async (req, res, next) => {
 
-    const { username, password, email } = req.body;
-    
+    const { username, password, email } = req.body;  
+
     try {
       // projection
       const usernameExists = await User.findOne({ username }, 'username');

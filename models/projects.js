@@ -7,8 +7,8 @@ const projectSchema = new Schema({
     description: { type: String, required: true },
     deadline: { type: Date, default: null },
     tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
-    users: [{ type: Schema.Types.ObjectId, reg: 'User'}],
-    teams: [{ type: Schema.Types.ObjectId, reg: 'Team'}],
+    users: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+    teams: [{ type: Schema.Types.ObjectId, ref: 'Team'}],
 
 }, { 
     timestamps: { 
