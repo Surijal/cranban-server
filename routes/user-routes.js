@@ -74,5 +74,23 @@ router.patch('/:id', isLoggedIn, ( req, res, next ) => {
 })
 
 
+//DELETE USER
+router.delete('/:id', isLoggedIn, ( req, res, next ) => {
+    const { id } = req.params;
+
+    if ( !mongoose.Types.ObjectId.isValid(id)) {
+        res.status(500).json({message: 'Specified id is not valid'})
+        return
+    }
+
+    User.findOneAndRemove(id)
+        .then( () => {
+            res.status(202).json({message: 'User deleted'})
+        })
+        .catch((err) => {
+            res.status(400).json(err)
+        })
+} )
+
 
 module.exports = router;
