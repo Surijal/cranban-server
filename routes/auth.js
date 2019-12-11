@@ -9,7 +9,7 @@ const User = require('../models/user');
 const {
   isLoggedIn,
   isNotLoggedIn,
-  validationLoggin,
+  validationLogin,
 } = require('../helpers/middlewares');
 
 //  GET    '/me'
@@ -19,18 +19,19 @@ router.get('/me', isLoggedIn, (req, res, next) => {
 });
 
 //  POST    '/signup'
-router.post(
-  '/signup',
-  isNotLoggedIn,
-  validationLoggin,
-  async (req, res, next) => {
-    const { username, password } = req.body;
+router.post('/signup', isNotLoggedIn, validationLogin, async (req, res, next) => {
+      console.log(">>>>>>>>>>>>>>>", req.body);
 
+    const { username, password } = req.body;
+    
     try {
       // projection
       const usernameExists = await User.findOne({ username }, 'username');
 
-      if (usernameExists) return next(createError(400));
+      if (usernameExists) {
+        
+        return next(createError(400));
+      }
       else {
         const salt = bcrypt.genSaltSync(saltRounds);
         const hashPass = bcrypt.hashSync(password, salt);
@@ -50,7 +51,7 @@ router.post(
 router.post(
   '/login',
   isNotLoggedIn,
-  validationLoggin,
+  validationLogin,
   async (req, res, next) => {
     const { username, password } = req.body;
     try {
