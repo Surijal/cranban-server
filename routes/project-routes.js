@@ -18,24 +18,20 @@ const {
 
 
 //POST NEW PROJECT
-router.post('/', isLoggedIn, ( req, res, next ) => {
-    const { title, description, deadline, userId } = req.body;
+router.post('/', isLoggedIn,  async( req, res, next ) => {
 
+    const { title, description, deadline } = req.body;
 
-    
-    
-    Project.create({ title, description, deadline, tasks: [], users: userId })
-    .then((createdProject) => {
-        
-            return User.findByIdAndUpdate(userId, {$push: { projects: createdProject._id}})
-            .populate('user')
-        })
-        .then( (createdProject ) => {
-            res.status(201).json(createdProject)
-        })
-        .catch((err) => {
-            res.status(400).json(err)
-        })
+    const {_id} = req.session.currentUser;
+
+    try {
+        const createdProject = await Project.create({ title, description, deadline, tasks: [], users: [_id] });
+        await User.findByIdAndUpdate(_id, {$push: { projects: createdProject._id}}, { new: true});
+
+        res.status(201).json(createdProject)
+    } catch(err) {
+        res.status(400).json(err)
+    }
 })
 
 
@@ -55,6 +51,7 @@ router.get('/', isLoggedIn, ( req, res, next ) => {
 //GET SPECIFIC PROJECT
 router.get('/:id', isLoggedIn, ( req, res, next ) => {
     const { id } = req.params;
+    
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {
         res.status(500).json({message: 'Specified id is not valid'})
