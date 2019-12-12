@@ -1,5 +1,5 @@
 const createError = require('http-errors');
-const passwordLengthMin = 6;
+const passwordLengthMin = 2;
 
 
 exports.isLoggedIn = (req, res, next) => {
