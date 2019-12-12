@@ -69,15 +69,15 @@ router.patch('/:id', isLoggedIn, async ( req, res, next ) => {
     
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashPass = bcrypt.hashSync(password, salt)
+    console.log('>>>>>>>>>>>>>>', hashPass)
 
-    await User.findByIdAndUpdate( id, { username, firstname, email, password: hashPass }, {new: true})
-        console.log('>>>>>>>>>>>>>>', hashPass)
-        .then( () => {
-            res.status(201).json({message: 'User Profile updated'})
-        })
-        .catch((err) => {
-        res.status(400).json(err)
-    })
+    try {
+        const updatedUser = await User.findByIdAndUpdate( id, { username, firstname, email, password: hashPass }, {new: true})
+        res.status(201).json(updatedUser)
+
+    } catch (error) {
+        res.status(400).json(error)
+    }
 })
 
 
