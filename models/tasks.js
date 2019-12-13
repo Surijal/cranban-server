@@ -6,7 +6,7 @@ const taskSchema = new Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
     deadline: { type: Date, default: null },
-    project: { type: Schema.Types.ObjectID, ref: 'Project'},
+    project: { type: Schema.Types.ObjectId, ref: 'Project'},
     done: { type: Boolean, default: false },
     subTask: [{ 
     description: { type: String, required: true }, 
