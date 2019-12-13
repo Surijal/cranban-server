@@ -8,10 +8,11 @@ const taskSchema = new Schema({
     deadline: { type: Date, default: null },
     project: { type: Schema.Types.ObjectId, ref: 'Project'},
     done: { type: Boolean, default: false },
+    type: { type: String , enum: [ 'to do', 'doing', 'done', 'testing', 'backlog' ], default: 'to do' },
     subTask: [{ 
-    description: { type: String, required: true }, 
-    done: { type: Boolean, default: false }
-}]
+        description: { type: String, required: true }, 
+        done: { type: Boolean, default: false }
+    }]
 
 },{ 
     timestamps: { 
