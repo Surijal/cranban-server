@@ -51,13 +51,16 @@ router.get('/', isLoggedIn, ( req, res, next ) => {
 //GET PROJECT BY USER ID
 router.get('/user/:userId', isLoggedIn, ( req, res, next ) =>{
 
-    const { userId } = req.session.currentUser._id;
+    const {userId} = req.params;
+
+    console.log('>>>>>>>>>>>>>>> params', userId)
     
 
-    Project.findOne(userId)
+    Project.find({users: userId})
         .populate('tasks')
         .then( allUserProjects => {
             res.status(200).json(allUserProjects)
+            console.log('>>>>>>>>>>>>>>>>>>>>>>> allUserProjects', allUserProjects)
         })
         .catch( err => {
             res.status(400).json(err)
