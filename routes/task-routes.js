@@ -18,20 +18,24 @@ const {
 
 
 //POST NEW TASK
-router.post('/',  isLoggedIn, ( req, res, next ) => {
+router.post('/',  isLoggedIn, async ( req, res, next ) => {
     const { title, description, deadline, projectId } = req.body;
-    
+        
 
-    Task.create( { title, description, deadline, project: projectId })
-        .then( (newTask) => {
-            return Project.findByIdAndUpdate( projectId, { $push: { tasks: newTask._id }}, {new: true}).populate('tasks')
-        }) 
-        .then( (updatedProject) => {
-            res.status(201).json(updatedProject)
-        })
-        .catch( (err) => {
-            res.status(400).json(err)
-        })
+    try {
+
+        const createTask = await Task.create( { title, description, deadline, project: projectId })
+            
+                
+                console.log('>>>>>>>>>>>>> Backend newTask', createTask._id)
+                await Project.findByIdAndUpdate( {_id: createTask.project}, { $push: { tasks: createTask._id }}, {new: true}) .populate('tasks')
+            
+            
+                res.status(201).json(createTask)
+            }
+            catch(err) {
+                res.status(400).json(err) 
+    }
 })
 
 
@@ -107,8 +111,8 @@ router.delete( '/:id', isLoggedIn, ( req, res, next ) => {
         .then( ( deletedTask ) => {
             return deletedTask.project;
         })
-        .then( (projectId) => {
-            return Project.findByIdAndUpdate( projectId, { $pull: { tasks: id }})
+        .then( (deletedTask) => {
+            return Project.findByIdAndUpdate( deletedTask.projectId, { $pull: { tasks: id }})
         })
         .then( () => {
             res.status(202).json({message: 'Task deleted'})
