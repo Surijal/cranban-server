@@ -18,7 +18,7 @@ const {
 
 
 //POST NEW TASK
-router.post('/',  isLoggedIn, async ( req, res, next ) => {
+router.post('/tasks',  isLoggedIn, async ( req, res, next ) => {
     const { title, description, deadline, projectId } = req.body;
         
 
@@ -40,7 +40,7 @@ router.post('/',  isLoggedIn, async ( req, res, next ) => {
 
 
 //GET TASK BY ID
-router.get( '/:id', isLoggedIn, ( req, res, next ) => {
+router.get( '/tasks/:id', isLoggedIn, ( req, res, next ) => {
     const { id } = req.params;
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {
@@ -59,8 +59,10 @@ router.get( '/:id', isLoggedIn, ( req, res, next ) => {
 
 
 //GET TASKS BY PROJECT ID
-router.get(`/:projectId/tasks/:taskId`, isLoggedIn, ( req, res, next ) => {
-    const { taskId } = req.params;
+router.get(`/projects/:projectId/tasks/:taskId`, isLoggedIn, ( req, res, next ) => {
+    const  {projectId, taskId}  = req.params;
+    console.log('>>>>>>>>>>', req.params);
+    
 
     if (!mongoose.Types.ObjectId.isValid(taskId)) {
         res.status(500).json({message: 'Specified taskId is not valid'})
@@ -68,7 +70,7 @@ router.get(`/:projectId/tasks/:taskId`, isLoggedIn, ( req, res, next ) => {
     }
 
 
-    Task.findById(taskId)
+    Task.find({project: projectId })
         .then ( foundTasks => {
             res.status(200).json(foundTasks)
         })
@@ -79,7 +81,7 @@ router.get(`/:projectId/tasks/:taskId`, isLoggedIn, ( req, res, next ) => {
 
 
 // UPDATE TASK
-router.put('/:id', isLoggedIn, ( req, res, next) => {
+router.put('/tasks/:id', isLoggedIn, ( req, res, next) => {
     const { id } = req.params;
     const { title, description, deadline } = req.body;
 
@@ -98,7 +100,7 @@ router.put('/:id', isLoggedIn, ( req, res, next) => {
 })
 
 // DELETE TASK
-router.delete( '/:id', isLoggedIn, ( req, res, next ) => {
+router.delete( '/tasks/:id', isLoggedIn, ( req, res, next ) => {
     const { id } = req.params;
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {

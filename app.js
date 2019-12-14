@@ -72,7 +72,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ROUTER MIDDLEWARE
 app.use('/auth', auth);
 app.use('/api/projects', projectRouter);
-app.use('/api/tasks', taskRouter);
+app.use('/api', taskRouter);
 app.use('/api/users', userRouter);
 
 
