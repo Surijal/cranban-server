@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 
 const Project = require('../models/Projects');
-
+const Task = require('../models/Tasks')
 const User = require('../models/User');
 
 
@@ -53,14 +53,11 @@ router.get('/user/:userId', isLoggedIn, ( req, res, next ) =>{
 
     const {userId} = req.params;
 
-    console.log('>>>>>>>>>>>>>>> params', userId)
-    
-
     Project.find({users: userId})
         .populate('tasks')
         .then( allUserProjects => {
             res.status(200).json(allUserProjects)
-            console.log('>>>>>>>>>>>>>>>>>>>>>>> allUserProjects', allUserProjects)
+            
         })
         .catch( err => {
             res.status(400).json(err)
@@ -110,23 +107,27 @@ router.put('/:id', isLoggedIn, ( req, res, next ) => {
 })
 
 
-router.delete('/:id', isLoggedIn,( req, res, next ) => {
+router.delete('/:id', isLoggedIn,async ( req, res, next ) => {
     const { id } = req.params;
+
+    const { _id } = req.session.currentUser;
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {
         res.status(500).json({message: 'Specified id is not valid'})
         return
     }
 
-
-    Project.findByIdAndRemove(id)
-        .populate('tasks')
-        .then( (foundProject) => {
-            res.status(202).json(foundProject)
-        })
-        .catch( (err) => {
+    try {
+        const deleteProject = await Project.findByIdAndRemove(id)
+                                                        .populate('tasks')
+                                                        // .then( (foundProject) => {
+        await User.findByIdAndUpdate(_id, {$pull: { projects: deleteProject._id}}, { new: true});
+        await Task.remove( {project: deleteProject._id})                                                    
+            res.status(202).json(deleteProject)
+    }
+    catch (err) {
             res.status(400).json(err)
-        })
+    }
 })
 
 
