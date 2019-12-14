@@ -49,12 +49,9 @@ router.get('/', isLoggedIn, ( req, res, next ) => {
 
 
 //GET PROJECT BY USER ID
-router.get('/:userId', isLoggedIn, ( req, res, next ) =>{
+router.get('/user/:userId', isLoggedIn, ( req, res, next ) =>{
 
     const { userId } = req.session.currentUser._id;
-
-    console.log('>>>>>>>>>>>>>>> Current User Id ', req.session.currentUser._id);
-    
     
 
     Project.findOne(userId)
