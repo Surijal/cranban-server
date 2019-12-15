@@ -10,7 +10,7 @@ const taskSchema = new Schema({
     done: { type: Boolean, default: false },
     status: { type: String , enum: [ 'to do', 'doing', 'done', 'testing', 'backlog' ], default: 'to do' },
     type: { type: String, 
-                        enum: [ 'frontend', 'backend', 'styles', 'preparation'], default:'preparation'},
+                        enum: [ 'frontend', 'backend', 'styles', 'preperation'], default:'preperation'},
     subTask: [{ 
         description: { type: String, required: true }, 
         done: { type: Boolean, default: false }
