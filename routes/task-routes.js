@@ -82,7 +82,7 @@ router.get(`/projects/:id/tasks/:id`, isLoggedIn, ( req, res, next ) => {
 // UPDATE TASK
 router.put('/tasks/:id', isLoggedIn, ( req, res, next) => {
     const { id } = req.params;
-    const { title, description, deadline, done, type } = req.body;
+    const { title, description, deadline, done, type, status } = req.body;
 
     console.log('>>>>>>>>>>>>>> task-routes',req.body )
 
@@ -91,7 +91,7 @@ router.put('/tasks/:id', isLoggedIn, ( req, res, next) => {
         return
     }
 
-    Task.findByIdAndUpdate(id, { title, description, deadline, done, type })
+    Task.findByIdAndUpdate(id, { title, description, deadline, done, type, status })
         .then( () => {
             res.status(201).json({ message: 'Task updated' })
         })
