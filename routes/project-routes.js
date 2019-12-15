@@ -120,7 +120,7 @@ router.delete('/:id', isLoggedIn,async ( req, res, next ) => {
     try {
         const deleteProject = await Project.findByIdAndRemove(id).populate('tasks')
                                                         
-        await User.findByIdAndUpdate(_id, {$pull: { projects: deleteProject._id}}, { new: true});
+        await User.findByIdAndUpdate(_id, {$pull: { projects: deleteProject._id}});
         await Task.remove( {project: deleteProject._id})                                                    
             res.status(202).json(deleteProject)
     }
