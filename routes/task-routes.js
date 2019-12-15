@@ -59,15 +59,15 @@ router.get( '/tasks/:id', isLoggedIn, ( req, res, next ) => {
 
 
 //GET TASKS BY PROJECT ID
-router.get(`/projects/:projectId/tasks/:taskId`, isLoggedIn, ( req, res, next ) => {
+router.get(`/projects/:id/tasks/:id`, isLoggedIn, ( req, res, next ) => {
     const  {projectId, taskId}  = req.params;
     console.log('>>>>>>>>>>', req.params);
     
 
-    if (!mongoose.Types.ObjectId.isValid(taskId)) {
-        res.status(500).json({message: 'Specified taskId is not valid'})
-        return
-    }
+    // if (!mongoose.Types.ObjectId.isValid(taskId)) {
+    //     res.status(500).json({message: 'Specified taskId is not valid'})
+    //     return
+    // }
 
 
     Task.find({project: projectId })
