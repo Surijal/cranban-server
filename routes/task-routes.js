@@ -61,13 +61,12 @@ router.get( '/tasks/:id', isLoggedIn, ( req, res, next ) => {
 //GET TASKS BY PROJECT ID
 router.get(`/projects/:id/tasks/:id`, isLoggedIn, ( req, res, next ) => {
     const  {projectId, taskId}  = req.params;
-    console.log('>>>>>>>>>>', req.params);
     
 
-    // if (!mongoose.Types.ObjectId.isValid(taskId)) {
-    //     res.status(500).json({message: 'Specified taskId is not valid'})
-    //     return
-    // }
+    if (!mongoose.Types.ObjectId.isValid(taskId)) {
+        res.status(500).json({message: 'Specified taskId is not valid'})
+        return
+    }
 
 
     Task.find({project: projectId })
@@ -100,7 +99,7 @@ router.put('/tasks/:id', isLoggedIn, ( req, res, next) => {
 })
 
 // DELETE TASK
-router.delete( '/tasks/:id', isLoggedIn, ( req, res, next ) => {
+router.delete( '/tasks/:id', isLoggedIn, async ( req, res, next ) => {
     const { id } = req.params;
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {
@@ -109,19 +108,16 @@ router.delete( '/tasks/:id', isLoggedIn, ( req, res, next ) => {
     }
 
 
-    Task.findByIdAndRemove(id)
-        .then( ( deletedTask ) => {
-            return deletedTask.project;
-        })
-        .then( (deletedTask) => {
-            return Project.findByIdAndUpdate( deletedTask.projectId, { $pull: { tasks: id }})
-        })
-        .then( () => {
-            res.status(202).json({message: 'Task deleted'})
-        })
-        .catch( (err) => {
-            res.status(400).json(err)
-        })
+    try {
+        const deleteTask = await Task.findByIdAndRemove(id).populate('projects')
+            
+                await Project.findByIdAndUpdate( deleteTask.project, { $pull: { tasks: deleteTask._id }})
+            
+                res.status(202).json({message: 'Task deleted'})
+    }
+    catch( err ) {
+        res.status(400).json(err)
+    }
         
     })
     
