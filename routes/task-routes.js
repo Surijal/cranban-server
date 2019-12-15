@@ -82,14 +82,16 @@ router.get(`/projects/:id/tasks/:id`, isLoggedIn, ( req, res, next ) => {
 // UPDATE TASK
 router.put('/tasks/:id', isLoggedIn, ( req, res, next) => {
     const { id } = req.params;
-    const { title, description, deadline } = req.body;
+    const { title, description, deadline, done, type } = req.body;
+
+    console.log('>>>>>>>>>>>>>> task-routes',req.body )
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {
         res.status(500).json({message: 'Specified id is not valid'})
         return
     }
 
-    Task.findByIdAndUpdate(id, { title, description, deadline })
+    Task.findByIdAndUpdate(id, { title, description, deadline, done, type })
         .then( () => {
             res.status(201).json({ message: 'Task updated' })
         })
