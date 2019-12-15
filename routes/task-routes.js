@@ -19,12 +19,12 @@ const {
 
 //POST NEW TASK
 router.post('/tasks',  isLoggedIn, async ( req, res, next ) => {
-    const { title, description, deadline, projectId } = req.body;
+    const { title, description, deadline, projectId, status, type, done } = req.body;
         
 
     try {
 
-        const createTask = await Task.create( { title, description, deadline, project: projectId })
+        const createTask = await Task.create( { title, description, deadline, done, status, type, project: projectId })
             
                 
                 console.log('>>>>>>>>>>>>> Backend newTask', createTask._id)
