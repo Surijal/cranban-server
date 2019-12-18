@@ -82,15 +82,16 @@ router.patch('/:id', isLoggedIn, async ( req, res, next ) => {
 
 //DELETE USER
 router.delete('/:id', isLoggedIn, ( req, res, next ) => {
-    const { id } = req.params;
+    const id  = req.session.currentUser._id;
 
     if ( !mongoose.Types.ObjectId.isValid(id)) {
         res.status(500).json({message: 'Specified id is not valid'})
         return
     }
 
-    User.findOneAndRemove(id)
+    User.findByIdAndRemove(id)
         .then( () => {
+            req.session.currentUser = null;
             res.status(202).json({message: 'User deleted'})
         })
         .catch((err) => {
