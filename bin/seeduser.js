@@ -9,7 +9,7 @@ const users = [
 
 
 
-mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 .then(() => {
     console.log('connected to db');
     return User.create(users);
