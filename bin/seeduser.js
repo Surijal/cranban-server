@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Users = require('../models/Users');
+const User = require('../models/User');
 
 
 const users = [
@@ -12,7 +12,7 @@ const users = [
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })
 .then(() => {
     console.log('connected to db');
-    return Users.create(users);
+    return User.create(users);
 }).then((data) => {
     console.log('created data', data);
 }).then(() => {

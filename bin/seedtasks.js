@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Tasks = require('../models/Tasks');
+const Task = require('../models/Tasks');
 
 
 const tasks = [
@@ -652,7 +652,7 @@ const tasks = [
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })
 .then(() => {
     console.log('connected to db');
-    return Tasks.create(tasks);
+    return Task.create(tasks);
 }).then((data) => {
     console.log('created data', data);
 }).then(() => {

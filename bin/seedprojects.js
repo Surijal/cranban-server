@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Projects = require('../models/Projects');
+const Project = require('../models/Projects');
 
 
 const projects = [
@@ -11,7 +11,7 @@ const projects = [
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })
 .then(() => {
     console.log('connected to db');
-    return Projects.create(projects);
+    return Project.create(projects);
 }).then((data) => {
     console.log('created data', data);
 }).then(() => {
