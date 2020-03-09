@@ -13,6 +13,7 @@ const auth = require('./routes/auth');
 const projectRouter = require('./routes/project-routes');
 const taskRouter = require('./routes/task-routes');
 const userRouter = require('./routes/user-routes');
+const teamRouter = require('./routes/team-routes');
 
 
 // MONGOOSE CONNECTION
@@ -74,6 +75,7 @@ app.use('/auth', auth);
 app.use('/api/projects', projectRouter);
 app.use('/api', taskRouter);
 app.use('/api/users', userRouter);
+app.use('/api/teams', teamRouter);
 
 
 
