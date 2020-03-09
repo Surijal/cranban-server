@@ -5,6 +5,7 @@ const mongoose = require ("mongoose");
 const router = express.Router();
 
 const Team = require("../models/Teams");
+const User = require('../models/User');
 
 
 // Helpter Functions
@@ -17,9 +18,9 @@ const {
 
 
 // Create Team
-router.post('/teams', isLoggedIn,  async( req, res, next ) => {
+router.post('/', isLoggedIn,  async( req, res, next ) => {
 
-    const { name, description, deadline } = req.body;
+    const { name } = req.body;
 
     const {_id} = req.session.currentUser;
 
