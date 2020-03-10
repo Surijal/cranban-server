@@ -20,8 +20,6 @@ const {
 // Create Team
 router.post('/', isLoggedIn,  async( req, res, next ) => {
 
-    console.log("require body>>>>>>>>", req.body)
-
     const { name } = req.body;
 
     const {_id} = req.session.currentUser;
