@@ -90,4 +90,27 @@ router.get('/user/:userId', isLoggedIn, ( req, res, next ) => {
 
 })
 
+
+// Find Team by Id and update
+router.put('/:id', isLoggedIn, ( req, res, next ) => {
+
+    const { id } = req.params;
+    const { name } = req.body;
+
+
+    if ( !mongoose.Types.ObjectId.isValid(id)) {
+
+        res.status(500).json({ message: 'Specified teamId is not Valid'})
+        return
+    }
+
+    Team.findByIdAndUpdate( id, { name })
+        .then( updatedProject => {
+            res.status(200).json( updatedProject )
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+})
+
 module.exports = router;
