@@ -113,4 +113,27 @@ router.put('/:id', isLoggedIn, ( req, res, next ) => {
         })
 })
 
+
+// Delete Team
+router.delete('/:id', isLoggedIn, async ( req, res, next ) => {
+
+    const { id } = req.params;
+    const { userId } = req.session.currentUser;
+
+    if ( !mongoose.Types.ObjectId.isValid( id )) {
+
+        res.status(500).json({ message: 'Specified Id is not Valid'})
+        return
+    }
+
+    try {
+        const deleteTeam = await Team.findByIdAndDelete( id )
+    
+            res.status(202).json(deleteTeam)
+    }
+    catch(err) {
+        res.status(400).json(err)
+    }
+})
+
 module.exports = router;
