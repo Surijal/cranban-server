@@ -34,5 +34,21 @@ router.post('/', isLoggedIn,  async( req, res, next ) => {
     }
 })
 
+// Find all Teams
+router.get('/', isLoggedIn, ( req, res, next ) => {
+
+    Team.find()
+        .then( allTeams => {
+            res.status(200).json(allTeams)
+        })
+        .catch( err => {
+            res.status(400).json( err )
+        })
+})
+
+
+// Find specific Team by Team ID
+
+
 
 module.exports = router;
