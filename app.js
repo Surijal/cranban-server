@@ -75,7 +75,7 @@ app.use('/auth', auth);
 app.use('/api/projects', projectRouter);
 app.use('/api', taskRouter);
 app.use('/api/users', userRouter);
-app.use('/api/teams', teamRouter);
+app.use('/team', teamRouter);
 
 
 
