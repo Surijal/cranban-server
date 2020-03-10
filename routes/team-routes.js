@@ -68,4 +68,26 @@ router.get('/:id', isLoggedIn, ( req, res, next ) => {
 })
 
 
+// Find Team by User ID
+router.get('/user/:userId', isLoggedIn, ( req, res, next ) => {
+
+    const { userId } = req.session.currentUser;
+
+
+    if ( !mongoose.Types.ObjectId.isValid( userId )) {
+
+        res.status(500).json({ message: 'Specified userId is not Valid' })
+        return
+    }
+
+    Team.findById( { users: userId })
+        .then( foundTeams => {
+            res.status(200).json( foundTeams )
+        })
+        .catch( err => { 
+            res.status(400).json(err)
+        })
+
+})
+
 module.exports = router;
