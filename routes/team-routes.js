@@ -114,6 +114,34 @@ router.put('/:id', isLoggedIn, ( req, res, next ) => {
 })
 
 
+// Find all User by Team ID
+router.get('/:id', isLoggedIn, ( req, res, next) => {
+
+    const { id } = req.params;
+
+
+    if ( !mongoose.Types.ObjectId.isValid(id)) {
+
+        res.status(500).json({ message: 'Specified teamId is not Valid'})
+        return
+    }
+
+
+    User.find({ teams: id})
+        .then( foundUsers => {
+            res.status(200).json( foundUsers )
+        })
+        .catch( err => {
+            res.status(500).json(err)
+        })
+})
+
+
+// Remove specific User from Team
+router.patch('/:id', isLoggedIn, ( req, res, next ) => {
+
+})
+
 // Delete Team
 router.delete('/:id', isLoggedIn, async ( req, res, next ) => {
 
