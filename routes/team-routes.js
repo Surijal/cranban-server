@@ -22,10 +22,10 @@ router.post('/', isLoggedIn,  async( req, res, next ) => {
 
     const { name } = req.body;
 
-    const {_id} = req.session.currentUser;
+    const { id } = req.session.currentUser;
 
     try {
-        const createdTeam = await Team.create({ teamleader, members, name, projects: [], users: [_id] });
+        const createdTeam = await Team.create({ name, projects: [], members: [ id ] });
         await User.findByIdAndUpdate(_id, {$push: { teams: createdTeam._id}}, { new: true});
 
         res.status(201).json(createdTeam)
