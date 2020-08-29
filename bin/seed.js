@@ -10,27 +10,25 @@ const SubTasks = require('../models/SubTasks');
 
 const users = [
     {
-        "_id":{
-            "$oid":"5dfb3895f58a2e4ec40cb1e0"
-        },
-        "projects":[{
-            "$oid":"5dfb38cff58a2e4ec40cb1e1"
-        }],
+        //"_id":{"$oid":"5dfb3895f58a2e4ec40cb1e0"},
         "teams":[],
         "username":"Boris",
         "email":"boris@cranban.de",
-        "password":"$2b$10$JtikEVnf.yMC5ltd7ZTTy.UIEHR86C1xhNbyC623pshMRf04eD5UO",
+        "password":"$2b$10$JtikEVnf.yMC5ltd7ZTTy.UIEHR86C1xhNbyC623pshMRf04eD5UO"
+        
+        /*,
         "created_at":{
             "$date":{"$numberLong":"1576745109845"}
         },
         "updated_at":{
             "$date":{"$numberLong":"1576745167580"}
         },
-      //  "__v":{"$numberInt":"0"}
+       "__v":{"$numberInt":"0"}
+
+       */
     }
 
 ]
-
 
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
