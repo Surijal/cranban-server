@@ -9,11 +9,13 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique:true },
   projects: [{ type: Schema.Types.ObjectId, ref: 'Project'}],
   teams: [{ type: Schema.Types.ObjectId, ref: 'Team'}]
-}, { 
-timestamps: { 
-createdAt: 'created_at',
-updatedAt: 'updated_at' 
-}
+  }, 
+  { 
+  timestamps: 
+  { 
+    createdAt: 'created_at',
+    updatedAt: 'updated_at' 
+  }
 })
 
 
