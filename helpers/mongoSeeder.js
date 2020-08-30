@@ -3,7 +3,11 @@ const { getObjectId, getObjectIds } = require('mongo-seeding');
 
 
 const mapToEntities = ( names ) => {
+
+
+    
     return names.map(( name ) => {
+        console.log('Hello names  - mongoSeeder', id);
         const id = getObjectId( name );
 
         return {

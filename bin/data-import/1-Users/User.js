@@ -1,22 +1,27 @@
-const { mapToEntities } = require('../../../helpers/mongoSeeder');
-const { consoleLogEnabled } = require('mongoose-seed');
+const { getObjectId } = require('../../../helpers/mongoSeeder');
+// const { consoleLogEnabled } = require('mongoose-seed');
+const Users = require('../../../models/User')
 
-const Users = [ 
+
+const newUsers = [ 
     { 
+        _id: getObjectId('user1'),
         name: 'Boris'
     },
     
     {
+        _id: getObjectId('user2'),
         name: 'Surijal'
     },
     
     {
+        _id: getObjectId('user3'),
         name: 'Peter Pan' 
     }
 ];
 
-console.log('Hello Users', Users)
-
 // const User = mapToEntities(Users);
+console.log('Hello Users', newUsers)
 
-module.exports = Users;
+
+module.exports = newUsers;

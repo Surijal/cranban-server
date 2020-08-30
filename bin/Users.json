@@ -1,0 +1,42 @@
+[
+    {
+        "_id" : {
+            "$oid": "5f4bad979d319abc5bb4d795"
+        },
+        "username": "Surijal",
+        "password": "$2b$10$zJXOEPA67cRztCu6nb0wD.O.Q0RRbRcCaZA3B8mQQUoElDtHTsS72",
+        "email": "surijal@surijal.com",
+        "projects": [],
+        "teams": []
+    },
+    {
+        "_id" : {
+            "$oid": "5f4bad979d319abc5bb4d794"
+        },
+        "username": "boris",
+        "password": "$2b$10$zJXOEPA67cRztCu6nb0wD.O.Q0RRbRcCaZA3B8mQQUoElDtHTsS72",
+        "email": "boris@boris.com",
+        "projects": [],
+        "teams": []
+    },
+    {
+        "_id" : {
+            "$oid": "5f4bad979d319abc5bb4d793"
+        },
+        "username": "peter",
+        "password": "$2b$10$zJXOEPA67cRztCu6nb0wD.O.Q0RRbRcCaZA3B8mQQUoElDtHTsS72",
+        "email": "peter@peter.com",
+        "projects": [],
+        "teams": []
+    },
+    {
+        "_id" : {
+            "$oid": "5f4bad979d319abc5bb4d796"
+        },
+        "username": "pan",
+        "password": "$2b$10$zJXOEPA67cRztCu6nb0wD.O.Q0RRbRcCaZA3B8mQQUoElDtHTsS72",
+        "email": "pan@pan.com",
+        "projects": [],
+        "teams": []
+    }
+]
