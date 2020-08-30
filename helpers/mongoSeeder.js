@@ -1,8 +1,8 @@
 const { getObjectId, getObjectIds } = require('mongo-seeding');
-const { names } = require('debug');
+//const { names } = require('debug');
 
 
-const mapToEntities = ( name ) => {
+const mapToEntities = ( names ) => {
     return names.map(( name ) => {
         const id = getObjectId( name );
 
