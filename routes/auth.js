@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const router = express.Router();
 const createError = require('http-errors');
 const bcrypt = require('bcrypt');
@@ -74,7 +75,9 @@ router.post(
 //  POST    '/logout'
 router.post('/logout', isLoggedIn, (req, res, next) => {
   const { username } = req.session.currentUser;
-  req.session.destroy();
+  req.session.destroy( (err) => {
+    
+  });
   res
     .status(200) //  No Content
     .json({ message: `User '${username}' logged out - session destroyed` });
